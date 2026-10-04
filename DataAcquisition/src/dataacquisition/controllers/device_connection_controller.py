@@ -1,3 +1,4 @@
+import sys
 import time
 
 import serial
@@ -12,6 +13,17 @@ class DeviceConnectionController:
         self.timeout = timeout
         self.target_port = target_port
 
+    def _is_bluetooth_port(self, port) -> bool:
+        match sys.platform:
+            case "win32":
+                return "Bluetooth" in port.description or "Bluetooth" in port.hwid
+            case "linux":
+                return port.device.startswith("/dev/rfcomm")
+            case "darwin":
+                return "Bluetooth" in port.description
+            case _:
+                raise OSError(f"Unknown platform: {sys.platform}")
+
     def find_bluetooth_port(self) -> dict:
         ports = serial.tools.list_ports.comports()
         if not ports:
@@ -20,7 +32,7 @@ class DeviceConnectionController:
         for port in ports:
             if self.target_port and port.device != self.target_port:
                 continue
-            if "Bluetooth" not in port.description and "Bluetooth" not in port.hwid:
+            if not self._is_bluetooth_port(port):
                 continue
             try:
                 with serial.Serial(
