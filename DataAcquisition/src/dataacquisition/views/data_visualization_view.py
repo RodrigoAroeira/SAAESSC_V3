@@ -3,44 +3,30 @@ from matplotlib import animation
 
 
 class DataVisualizationView:
-    def __init__(self, file):
-        self.fig = None
-        self.graph = None
-        self.interval = 1
-        self.file = file
-        self.time = []
-        self.voltage = []
-        self.current = []
-
-    def create_figure(self):
+    def __init__(self, file_path: str):
+        self.file_path = file_path
         self.fig = plt.figure()
         self.graph = self.fig.add_subplot(111)
 
-    def update_graph(self, i):
-        self.file.seek(0)
-        dados = self.file.read()
-        linhas = dados.split("\n")
-        for y in linhas:
-            if len(y) > 0:
-                values = y.split()
-                self.voltage.append(float(values[0]))
-                self.current.append(float(values[1]))
-                self.time.append(float(values[2]))
+    def update_graph(self, i: int) -> None:
+        with open(self.file_path, "r") as f:
+            lines = f.read().splitlines()
+
+        time, voltage, current = [], [], []
+        for line in lines:
+            values = line.split()
+            if len(values) == 3:
+                voltage.append(float(values[0]))
+                current.append(float(values[1]))
+                time.append(float(values[2]))
 
         self.graph.cla()
+        self.graph.plot(time, voltage, label="Voltage")
+        self.graph.plot(time, current, label="Current")
+        self.graph.legend(loc="upper left")
+        self.fig.tight_layout()
 
-        self.graph.plot(self.time, self.voltage, label="Channel 1")
-        plt.plot(self.time, self.current, label="Channel 2")
-
-        plt.legend(loc="upper left")
-        plt.tight_layout()
-
-        self.voltage.clear()
-        self.current.clear()
-        self.time.clear()
-
-    def plot_figure(self):
-        animation.FuncAnimation(plt.gcf(), self.update_graph, frames=10, interval=1000)
-
+    def plot_figure(self) -> None:
+        animation.FuncAnimation(self.fig, self.update_graph, interval=1000)
         plt.tight_layout()
         plt.show()

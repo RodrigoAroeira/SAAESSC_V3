@@ -7,7 +7,7 @@ class Command(Enum):
     Sair = 5
 
 
-def introduction_page():
+def introduction_page() -> Command | None:
     message = """
         SAAESSC
 
@@ -17,6 +17,10 @@ def introduction_page():
     """
 
     print(message)
-    command = int(input("Comando: "))
 
-    return Command(command)
+    try:
+        command = int(input("Comando: "))
+        return Command(command)
+    except (ValueError, KeyError):
+        print("\nComando inválido!\n")
+        return None
