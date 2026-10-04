@@ -1,5 +1,3 @@
-
-
 class DeviceConnectionView:
     def connecting_view(self):
         # os.system('cls||clear')

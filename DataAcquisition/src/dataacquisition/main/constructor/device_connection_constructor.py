@@ -1,4 +1,6 @@
-from dataacquisition.controllers.device_connection_controller import DeviceConnectionController
+from dataacquisition.controllers.device_connection_controller import (
+    DeviceConnectionController,
+)
 from dataacquisition.views.device_connection_view import DeviceConnectionView
 
 

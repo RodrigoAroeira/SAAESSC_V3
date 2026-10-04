@@ -40,9 +40,7 @@ class DataVisualizationView:
         self.time.clear()
 
     def plot_figure(self):
-        animation.FuncAnimation(
-            plt.gcf(), self.update_graph, frames=10, interval=1000
-        )
+        animation.FuncAnimation(plt.gcf(), self.update_graph, frames=10, interval=1000)
 
         plt.tight_layout()
         plt.show()

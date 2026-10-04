@@ -1,4 +1,6 @@
-from dataacquisition.controllers.data_visualization_controller import DataVisualizationController
+from dataacquisition.controllers.data_visualization_controller import (
+    DataVisualizationController,
+)
 from dataacquisition.views.data_visualization_view import DataVisualizationView
 
 from ..constructor.device_connection_constructor import device_connection_constructor
