@@ -1,4 +1,4 @@
-from Src.main.process_handle import start
+from dataacquisition import main
 
 if __name__ == "__main__":
-    start()
+    main()
