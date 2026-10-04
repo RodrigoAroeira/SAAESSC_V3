@@ -4,6 +4,12 @@ import time
 import serial
 import serial.tools.list_ports
 
+DEFAULT_PORT: str = {
+    "win32": "COM5",
+    "linux": "/dev/rfcomm0",
+    "darwin": "/dev/cu.Bluetooth-Incoming-Port",
+}.get(sys.platform, "")
+
 
 class DeviceConnectionController:
     def __init__(

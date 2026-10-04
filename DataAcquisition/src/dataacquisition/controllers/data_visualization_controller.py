@@ -1,5 +1,7 @@
 import os
 
+import serial
+
 from dataacquisition.controllers.device_connection_controller import (
     DeviceConnectionController,
 )
@@ -26,7 +28,7 @@ class DataVisualizationController:
                 return file_name
             counter += 1
 
-    def read_data(self, ser) -> dict:
+    def read_data(self, ser: serial.Serial) -> dict:
         raw = self.device_conn.read_data(ser)
         if raw == "end":
             return {"done": True, "success": True}
@@ -43,5 +45,5 @@ class DataVisualizationController:
         return {"done": False, "success": False}
 
     @staticmethod
-    def plot_command(ser) -> None:
+    def plot_command(ser: serial.Serial) -> None:
         ser.write(b"1\n")
