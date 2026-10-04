@@ -15,3 +15,6 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.asv
+# Ambiente Python
+.venv/
+venv/
