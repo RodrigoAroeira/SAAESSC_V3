@@ -21,6 +21,5 @@ def introduction_page() -> Command | None:
     try:
         command = int(input("Comando: "))
         return Command(command)
-    except (ValueError, KeyError):
-        print("\nComando inválido!\n")
+    except ValueError, KeyError:
         return None
